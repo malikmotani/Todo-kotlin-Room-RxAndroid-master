@@ -28,6 +28,7 @@
     <string name="update_category">Update Category</string>
     <string name="please_add_task">Please add task</string>
     <string name="please_add_title">Please add title</string>
+    <string name="please_add_category">Please add a category</string>
     <string name="add">ADD</string>
     <string name="cancel">CANCEL</string>
     <string name="category_added">Category Added</string>

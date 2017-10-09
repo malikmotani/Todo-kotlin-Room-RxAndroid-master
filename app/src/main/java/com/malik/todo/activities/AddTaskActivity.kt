@@ -160,10 +160,13 @@ class AddTaskActivity : AppCompatActivity(), View.OnClickListener, OnItemSelecte
         var task = Task()
 //
         if (finalTitle.isEmpty()) {
-            toastMessage(this, "Task title is empty!")
+            toastMessage(this, getString(R.string.please_add_title))
             return
         } else if (finalTask.isEmpty()) {
             toastMessage(mActivity, getString(R.string.please_add_task))
+            return
+        } else if (listCategory.isEmpty()) {
+            toastMessage(mActivity, getString(R.string.please_add_category))
             return
         } else {
             task.category = listCategory[spinnerCategory.selectedItemPosition]
