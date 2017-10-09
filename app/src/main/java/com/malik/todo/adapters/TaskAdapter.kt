@@ -2,6 +2,7 @@ package com.malik.todo.adapters
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,7 @@ import kotlin.collections.ArrayList
 /**
  * Created by malik on 4/10/17.
  */
-class TaskAdapter(val mContext: Context, mArrayList: ArrayList<Task>) :
+class TaskAdapter(private val mContext: Context, mArrayList: ArrayList<Task>) :
         RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
     var isInit = false
@@ -28,7 +29,10 @@ class TaskAdapter(val mContext: Context, mArrayList: ArrayList<Task>) :
         set(value) {
             field = value
             if (isInit) {
-                notifyItemChanged(pos, tasks.size)
+                if (tasks.isNotEmpty())
+                    notifyItemRangeChanged(pos, tasks.size)
+                else
+                    notifyDataSetChanged()
             } else {
                 isInit = true
                 notifyDataSetChanged()

@@ -46,12 +46,12 @@ class AddTaskActivity : AppCompatActivity(), View.OnClickListener, OnItemSelecte
     private var finalTitle = ""
     private var finalTask = ""
     private var finalCategoryName = ""
-    private var finalCategoryId = 0
+
     private lateinit var listCategory: List<Category>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_task)
-
         initialize()
     }
 
@@ -155,8 +155,8 @@ class AddTaskActivity : AppCompatActivity(), View.OnClickListener, OnItemSelecte
 
         finalTitle = edtTitle.text.toString().trim()
         finalTask = edtTask.text.toString().trim()
-        finalTime = edtSetTime.text.toString()
-        finalDate = edtSetDate.text.toString()
+//        finalTime = edtSetTime.text.toString()
+//        finalDate = edtSetDate.text.toString()
         var task = Task()
 //
         if (finalTitle.isEmpty()) {
