@@ -2,7 +2,6 @@ package com.malik.todo.adapters
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +21,12 @@ import kotlin.collections.ArrayList
 class TaskAdapter(private val mContext: Context, mArrayList: ArrayList<Task>) :
         RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
-    var isInit = false
+    private var isInit = false
 
-    var pos = 0;
+    private var pos = 0
+
+    val TAG: String = TaskAdapter::class.java.simpleName
+
     var tasks: List<Task> = mArrayList
         set(value) {
             field = value
@@ -39,12 +41,7 @@ class TaskAdapter(private val mContext: Context, mArrayList: ArrayList<Task>) :
             }
         }
 
-
-    val TAG: String = TaskAdapter::class.java.simpleName
-
-    override fun getItemCount(): Int {
-        return tasks.size
-    }
+    override fun getItemCount(): Int = tasks.size
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val mView = LayoutInflater.from(mContext).inflate(R.layout.row_task, parent, false)
@@ -64,9 +61,7 @@ class TaskAdapter(private val mContext: Context, mArrayList: ArrayList<Task>) :
 
     }
 
-    fun getList(): List<Task> {
-        return tasks
-    }
+    fun getList(): List<Task> = tasks
 
     fun deleteTask(position: Int) {
 
@@ -101,12 +96,12 @@ class TaskAdapter(private val mContext: Context, mArrayList: ArrayList<Task>) :
                 })
     }
 
-    fun updateTask(task: Task) {
-        Single.fromCallable {
-            AppController.database?.taskDao()?.updateTask(task)
-        }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe()
-    }
+//    fun updateTask(task: Task) {
+//        Single.fromCallable {
+//            AppController.database?.taskDao()?.updateTask(task)
+//        }.subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread()).subscribe()
+//    }
 
 //    fun finishTask(position: Int, task: Task) {
 //        Single.fromCallable {
@@ -137,9 +132,7 @@ class TaskAdapter(private val mContext: Context, mArrayList: ArrayList<Task>) :
 //        return true
 //    }
 
-    override fun getItemViewType(position: Int): Int {
-        return position
-    }
+    override fun getItemViewType(position: Int): Int = position
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val viewColorTag = view.viewColorTag!!

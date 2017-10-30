@@ -25,9 +25,10 @@ class CategoryAdapter(val mContext: Context, mArrayList: ArrayList<Category>) :
             field = value
             notifyDataSetChanged()
         }
+
     val TAG = CategoryAdapter::class.java.simpleName!!
 
-    var mArrayList: ArrayList<Category> = ArrayList()
+    private var mArrayList: ArrayList<Category> = ArrayList()
 
     var inflater: LayoutInflater
 
@@ -49,9 +50,7 @@ class CategoryAdapter(val mContext: Context, mArrayList: ArrayList<Category>) :
         })
     }
 
-    override fun getItemCount(): Int {
-        return categories.size
-    }
+    override fun getItemCount(): Int = categories.size
 
     /**
      * Inflating layout

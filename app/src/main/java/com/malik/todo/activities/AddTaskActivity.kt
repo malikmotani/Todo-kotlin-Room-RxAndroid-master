@@ -31,16 +31,16 @@ import kotlin.collections.ArrayList
 
 class AddTaskActivity : AppCompatActivity(), View.OnClickListener, OnItemSelectedListener.CategoryName {
 
-    val TAG: String = MainActivity::class.java.simpleName
+    private val TAG: String = MainActivity::class.java.simpleName
 
-    val mActivity: Activity = this@AddTaskActivity
+    private val mActivity: Activity = this@AddTaskActivity
 
-    lateinit var myCalendar: Calendar
+    private lateinit var myCalendar: Calendar
 
-    lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
-    lateinit var timeSetListener: TimePickerDialog.OnTimeSetListener
+    private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
+    private lateinit var timeSetListener: TimePickerDialog.OnTimeSetListener
 
-    //Final variable to save in database
+    //Final variables to save in database
     private var finalDate = ""
     private var finalTime = ""
     private var finalTitle = ""
@@ -65,18 +65,14 @@ class AddTaskActivity : AppCompatActivity(), View.OnClickListener, OnItemSelecte
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
-        /**
-         * click listener
-         * */
+        // click listener
         edtSetDate.setOnClickListener(this)
         edtSetTime.setOnClickListener(this)
         imgCancelDate.setOnClickListener(this)
         imgCancelTime.setOnClickListener(this)
         imgAddCategory.setOnClickListener(this)
 
-        /**
-         * load category in spinner
-         * */
+        // load category in spinner
         readSpinner()
     }
 
@@ -159,32 +155,37 @@ class AddTaskActivity : AppCompatActivity(), View.OnClickListener, OnItemSelecte
 //        finalDate = edtSetDate.text.toString()
         var task = Task()
 //
-        if (finalTitle.isEmpty()) {
-            toastMessage(this, getString(R.string.please_add_title))
-            return
-        } else if (finalTask.isEmpty()) {
-            toastMessage(mActivity, getString(R.string.please_add_task))
-            return
-        } else if (listCategory.isEmpty()) {
-            toastMessage(mActivity, getString(R.string.please_add_category))
-            return
-        } else {
-            task.category = listCategory[spinnerCategory.selectedItemPosition]
-            task.title = finalTitle
-            task.description = finalTask
-            task.time = finalTime
-            task.date = finalDate
-            task.type = ACTIVE
+        when {
+            finalTitle.isEmpty() -> {
+                toastMessage(this, getString(R.string.please_add_title))
+                return
+            }
+            finalTask.isEmpty() -> {
+                toastMessage(mActivity, getString(R.string.please_add_task))
+                return
+            }
+            listCategory.isEmpty() -> {
+                toastMessage(mActivity, getString(R.string.please_add_category))
+                return
+            }
+            else -> {
+                task.category = listCategory[spinnerCategory.selectedItemPosition]
+                task.title = finalTitle
+                task.description = finalTask
+                task.time = finalTime
+                task.date = finalDate
+                task.type = ACTIVE
 
-            Log.d(TAG, "Title : " + finalTitle + "\nTask : " + finalTask +
-                    "\nDate : " + finalDate + "\nTime : " + finalTime +
-                    "\nCategory : " + finalCategoryName)
+                Log.d(TAG, "Title : " + finalTitle + "\nTask : " + finalTask +
+                        "\nDate : " + finalDate + "\nTime : " + finalTime +
+                        "\nCategory : " + finalCategoryName)
 
-            Single.fromCallable { AppController.database?.taskDao()?.insertTask(task) }
-                    .subscribeOn(Schedulers.newThread())
-                    .subscribe()
+                Single.fromCallable { AppController.database?.taskDao()?.insertTask(task) }
+                        .subscribeOn(Schedulers.newThread())
+                        .subscribe()
 
-            finish()
+                finish()
+            }
         }
     }
 
@@ -203,11 +204,11 @@ class AddTaskActivity : AppCompatActivity(), View.OnClickListener, OnItemSelecte
     private fun loadDataInSpinner(listCategory: List<Category>) {
 
         this.listCategory = listCategory
-        var labels: ArrayList<String>? = ArrayList()
-        for (category in listCategory) {
-            labels?.add(category.name!!)
-        }
-        if (labels!!.isEmpty()) {
+        var labels = ArrayList<String>()
+
+        listCategory.mapTo(labels) { it.name!! }
+
+        if (labels.isEmpty()) {
             val arrayList: ArrayList<String> = ArrayList()
             arrayList.add(getString(R.string.no_category_found))
             labels = arrayList

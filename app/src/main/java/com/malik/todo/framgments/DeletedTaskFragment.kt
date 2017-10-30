@@ -32,14 +32,14 @@ class DeletedTaskFragment : Fragment(), OnStartDragListener {
 
     val TAG: String = DeletedTaskFragment::class.java.simpleName
 
-    lateinit var txtNoHistory: TextView
-    lateinit var recyclerViewHistory: RecyclerView
+    private lateinit var txtNoHistory: TextView
+    private lateinit var recyclerViewHistory: RecyclerView
 
-    var mArrayList: ArrayList<Task> = ArrayList()
+    private var mArrayList: ArrayList<Task> = ArrayList()
 
     lateinit var taskAdapter: TaskAdapter
 
-    lateinit var mItemTouchHelper: ItemTouchHelper
+    private lateinit var mItemTouchHelper: ItemTouchHelper
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -146,9 +146,8 @@ class DeletedTaskFragment : Fragment(), OnStartDragListener {
 
         val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                return false
-            }
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean =
+                    false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
@@ -176,7 +175,7 @@ class DeletedTaskFragment : Fragment(), OnStartDragListener {
 
                     iconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_unfinish)
 
-                    paint.color = Color.parseColor(getString(R.color.green))
+                    paint.color = resources.getColor(R.color.green)
 
                     canvas.drawRect(itemView.left.toFloat(), itemView.top.toFloat(),
                             itemView.left.toFloat() + dX, itemView.bottom.toFloat(), paint)
@@ -190,7 +189,7 @@ class DeletedTaskFragment : Fragment(), OnStartDragListener {
 
                     iconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_delete_white_png)
 
-                    paint.color = Color.parseColor(getString(R.color.red))
+                    paint.color = resources.getColor(R.color.red)
 
                     canvas.drawRect(itemView.right.toFloat() + dX, itemView.top.toFloat(),
                             itemView.right.toFloat(), itemView.bottom.toFloat(), paint)
@@ -217,9 +216,8 @@ class DeletedTaskFragment : Fragment(), OnStartDragListener {
     }
 
 
-    private fun convertDpToPx(dp: Int): Int {
-        return Math.round(dp * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
-    }
+    private fun convertDpToPx(dp: Int): Int =
+            Math.round(dp * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
 
     fun isTaskListEmpty() {
         if (taskAdapter.itemCount == 0) {

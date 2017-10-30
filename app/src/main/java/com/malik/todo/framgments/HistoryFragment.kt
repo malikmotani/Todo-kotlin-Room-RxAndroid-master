@@ -3,6 +3,7 @@ package com.malik.todo.framgments
 import android.graphics.*
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -146,9 +147,8 @@ class HistoryFragment : Fragment(), OnStartDragListener {
 
         val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                return false
-            }
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean =
+                    false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
@@ -176,7 +176,7 @@ class HistoryFragment : Fragment(), OnStartDragListener {
 
                     iconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_unfinish)
 
-                    paint.color = Color.parseColor(getString(R.color.green))
+                    paint.color = ContextCompat.getColor(context, R.color.green)
 
                     canvas.drawRect(itemView.left.toFloat(), itemView.top.toFloat(),
                             itemView.left.toFloat() + dX, itemView.bottom.toFloat(), paint)
@@ -190,7 +190,7 @@ class HistoryFragment : Fragment(), OnStartDragListener {
 
                     iconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_delete_white_png)
 
-                    paint.color = Color.parseColor(getString(R.color.red))
+                    paint.color = ContextCompat.getColor(context, R.color.red)
 
                     canvas.drawRect(itemView.right.toFloat() + dX, itemView.top.toFloat(),
                             itemView.right.toFloat(), itemView.bottom.toFloat(), paint)
@@ -217,9 +217,8 @@ class HistoryFragment : Fragment(), OnStartDragListener {
     }
 
 
-    private fun convertDpToPx(dp: Int): Int {
-        return Math.round(dp * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
-    }
+    private fun convertDpToPx(dp: Int): Int =
+            Math.round(dp * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
 
     fun isTaskListEmpty() {
         if (taskAdapter.itemCount == 0) {

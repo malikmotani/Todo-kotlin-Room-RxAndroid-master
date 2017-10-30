@@ -37,7 +37,7 @@ class CategoryFragment : Fragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        var view = inflater!!.inflate(R.layout.fragment_category, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_category, container, false)
 
         initialize(view)
 

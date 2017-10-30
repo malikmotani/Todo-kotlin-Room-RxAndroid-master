@@ -30,6 +30,7 @@ import java.util.*
 /**
  * Created by malik on 3/10/17.
  */
+
 class TaskListFragment : Fragment(), View.OnClickListener, OnStartDragListener {
     var TAG: String = TaskListFragment::class.java.simpleName
     lateinit var fabAddTask: FloatingActionButton
@@ -68,20 +69,21 @@ class TaskListFragment : Fragment(), View.OnClickListener, OnStartDragListener {
         registerAllTakListener()
 
         recyclerViewTask.addOnItemTouchListener(
-                RecyclerItemClickListener(context, recyclerViewTask, object : RecyclerItemClickListener.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
-                        Log.e(TAG, "item click Position : " + position)
+                RecyclerItemClickListener(context, recyclerViewTask,
+                        object : RecyclerItemClickListener.OnItemClickListener {
+                            override fun onItemClick(view: View, position: Int) {
+                                Log.e(TAG, "item click Position : " + position)
 
-                        val holder: TaskAdapter.ViewHolder = TaskAdapter.ViewHolder(view)
+                                val holder: TaskAdapter.ViewHolder = TaskAdapter.ViewHolder(view)
 
-                        clickForDetails(holder, position)
-                    }
+                                clickForDetails(holder, position)
+                            }
 
-                    override fun onLongItemClick(view: View, position: Int) {
+                            override fun onLongItemClick(view: View, position: Int) {
 //                        taskAdapter.markTaskAs(position, DONE)
-                        Log.e(TAG, "item long click Position : " + position)
-                    }
-                })
+                                Log.e(TAG, "item long click Position : " + position)
+                            }
+                        })
         )
     }
 
@@ -200,7 +202,7 @@ class TaskListFragment : Fragment(), View.OnClickListener, OnStartDragListener {
 
                     iconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_check_white_png)
 
-                    paint.color = Color.parseColor(getString(R.color.green))
+                    paint.color = resources.getColor(R.color.green)
 
                     canvas.drawRect(itemView.left.toFloat(), itemView.top.toFloat(),
                             itemView.left.toFloat() + dX, itemView.bottom.toFloat(), paint)
@@ -214,7 +216,7 @@ class TaskListFragment : Fragment(), View.OnClickListener, OnStartDragListener {
 
                     iconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_delete_white_png)
 
-                    paint.color = Color.parseColor(getString(R.color.red))
+                    paint.color = resources.getColor(R.color.red)
 
                     canvas.drawRect(itemView.right.toFloat() + dX, itemView.top.toFloat(),
                             itemView.right.toFloat(), itemView.bottom.toFloat(), paint)
